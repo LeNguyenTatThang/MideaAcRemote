@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Midea AC Remote</string>
+    <string name="nav_remote">Điều khiển</string>
+    <string name="nav_timer">Hẹn giờ</string>
+    <string name="nav_favorites">Yêu thích</string>
+    <string name="nav_schedule">Lịch</string>
+    <string name="nav_settings">Cài đặt</string>
+</resources>

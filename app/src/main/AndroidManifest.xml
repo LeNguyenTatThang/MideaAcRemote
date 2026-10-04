@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Gửi tín hiệu IR qua cổng hồng ngoại trên máy -->
+    <uses-permission android:name="android.permission.TRANSMIT_IR" />
+
+    <!-- Gửi tín hiệu IR qua IR blaster WiFi (HTTP) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Hẹn giờ (Schedule). Android 12 trở xuống luôn cho phép báo thức chính xác;
+         12+ sẽ tự rơi về báo thức xấp xỉ nếu người dùng chưa cấp quyền. -->
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
+
+    <!-- Không bắt buộc: máy không có IR blaster vẫn chạy được bằng IR WiFi -->
+    <uses-feature
+        android:name="android.hardware.consumerir"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+
+    <application
+        android:name=".MideaApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MideaAcRemote"
+        tools:targetApi="35">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MideaAcRemote">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Nhận sự kiện hẹn giờ của Schedule -->
+        <receiver
+            android:name=".schedule.ScheduleReceiver"
+            android:exported="false" />
+    </application>
+</manifest>
