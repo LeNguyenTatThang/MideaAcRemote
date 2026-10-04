@@ -36,7 +36,7 @@ class ScheduleReceiver : BroadcastReceiver() {
                         ScheduleAction.APPLY_STATE -> schedule.state
                     }
                     repo.setState(target)
-                    app.container.sendState(target)
+                    app.container.sendState(target, current)
 
                     if (schedule.recurring) {
                         app.container.scheduler.schedule(schedule)

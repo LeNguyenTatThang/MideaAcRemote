@@ -72,12 +72,12 @@ class AppRepository(private val context: Context) {
 
     suspend fun upsertFavorite(favorite: Favorite) = edit { p ->
         val list = decodeFavorites(p[Keys.FAVORITES]).filterNot { it.id == favorite.id } + favorite
-        it[Keys.FAVORITES] = encodeFavorites(list)
+        p[Keys.FAVORITES] = encodeFavorites(list)
     }
 
     suspend fun deleteFavorite(id: String) = edit { p ->
         val list = decodeFavorites(p[Keys.FAVORITES]).filterNot { it.id == id }
-        it[Keys.FAVORITES] = encodeFavorites(list)
+        p[Keys.FAVORITES] = encodeFavorites(list)
     }
 
     // ------------------------------------------------------------------
@@ -86,19 +86,19 @@ class AppRepository(private val context: Context) {
 
     suspend fun upsertSchedule(schedule: Schedule) = edit { p ->
         val list = decodeSchedules(p[Keys.SCHEDULES]).filterNot { it.id == schedule.id } + schedule
-        it[Keys.SCHEDULES] = encodeSchedules(list)
+        p[Keys.SCHEDULES] = encodeSchedules(list)
     }
 
     suspend fun deleteSchedule(id: String) = edit { p ->
         val list = decodeSchedules(p[Keys.SCHEDULES]).filterNot { it.id == id }
-        it[Keys.SCHEDULES] = encodeSchedules(list)
+        p[Keys.SCHEDULES] = encodeSchedules(list)
     }
 
     suspend fun setScheduleEnabled(id: String, enabled: Boolean) = edit { p ->
         val list = decodeSchedules(p[Keys.SCHEDULES]).map {
             if (it.id == id) it.copy(enabled = enabled) else it
         }
-        it[Keys.SCHEDULES] = encodeSchedules(list)
+        p[Keys.SCHEDULES] = encodeSchedules(list)
     }
 
     fun scheduleById(id: String): Flow<Schedule?> = context.appDataStore.data.map { p ->
